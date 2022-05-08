@@ -77,30 +77,18 @@ public class MainFrame extends JFrame {
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
                 try{
-                    OwnExceptions.nameorsurname(textFieldName.getText());
+                    OwnExceptions.nameorsurname(textFieldSurname.getText());
                 }
                 catch (IllegalArgumentException exc)
                 {
-                    JOptionPane.showMessageDialog(textFieldName,exc.getMessage());
+                    JOptionPane.showMessageDialog(textFieldSurname,exc.getMessage());
                 }
             }
         });
         //textFieldMail
-        textFieldSurname.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-                try{
-                    OwnExceptions.nameorsurname(textFieldName.getText());
-                }
-                catch (IllegalArgumentException exc)
-                {
-                    JOptionPane.showMessageDialog(textFieldName,exc.getMessage());
-                }
-            }
-        });
 
-        textFieldSurname.addFocusListener(new FocusAdapter() {
+
+        textFieldMail.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
@@ -114,9 +102,9 @@ public class MainFrame extends JFrame {
             }
             });
 
+
+
     }
-
-
     public static void main(String[] args) {
         MainFrame mf = new MainFrame();
         mf.setContentPane(mf.mainPanel);

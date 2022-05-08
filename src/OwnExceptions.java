@@ -1,3 +1,4 @@
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class OwnExceptions {
@@ -23,10 +24,12 @@ public class OwnExceptions {
     }
 
     public static void mail(String s){
-        int intIndex = s.indexOf("@gra.pl");
-        if (intIndex == -1)
+        Pattern pattern = Pattern.compile("@gra.pl$");
+        Matcher matcher = pattern.matcher(s);
+        if (matcher.find()){}
+        else
         {
-            throw new IllegalArgumentException("please use @gra.pl");
+            throw new IllegalArgumentException("the required domain is @gra.pl");
         }
     }
 
