@@ -11,6 +11,8 @@ public class MainFrame extends JFrame {
     private JButton button1;
     private JPanel mainPanel;
     private JTextField textFieldNick;
+    private JTextField textFieldSurname;
+    private JTextField textFieldMail;
 
     public MainFrame() {
 
@@ -48,7 +50,7 @@ public class MainFrame extends JFrame {
                 }
                 catch (IllegalArgumentException exc)
                 {
-                    JOptionPane.showMessageDialog(textFieldName,exc.getMessage());
+                    JOptionPane.showMessageDialog(textFieldNick,exc.getMessage());
                 }
             }
         });
@@ -58,8 +60,59 @@ public class MainFrame extends JFrame {
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
 
+                try{
+                    OwnExceptions.nameorsurname(textFieldName.getText());
+                }
+                catch (IllegalArgumentException exc)
+                {
+                    JOptionPane.showMessageDialog(textFieldName,exc.getMessage());
+                }
+
             }
         });
+
+
+        textFieldSurname.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+                try{
+                    OwnExceptions.nameorsurname(textFieldName.getText());
+                }
+                catch (IllegalArgumentException exc)
+                {
+                    JOptionPane.showMessageDialog(textFieldName,exc.getMessage());
+                }
+            }
+        });
+        //textFieldMail
+        textFieldSurname.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+                try{
+                    OwnExceptions.nameorsurname(textFieldName.getText());
+                }
+                catch (IllegalArgumentException exc)
+                {
+                    JOptionPane.showMessageDialog(textFieldName,exc.getMessage());
+                }
+            }
+        });
+
+        textFieldSurname.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+                try{
+                    OwnExceptions.mail(textFieldMail.getText());
+                }
+                catch (IllegalArgumentException exc)
+                {
+                    JOptionPane.showMessageDialog(textFieldMail,exc.getMessage());
+                }
+            }
+            });
 
     }
 
