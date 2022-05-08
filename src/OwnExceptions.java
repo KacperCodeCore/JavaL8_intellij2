@@ -7,6 +7,8 @@ public class OwnExceptions {
             throw new IllegalArgumentException("the Nick must contain at last 6 characters");
         } else if (!s.isEmpty() && !Character.isUpperCase(s.charAt(0))) {
             throw new IllegalArgumentException("the first leather must be uppercase");
+        } else if (!Pattern.matches("\\w*\\d+\\w*", s)) {
+        throw new IllegalArgumentException("the Nick must contain at last 1 digit");
         }
     }
 
