@@ -3,6 +3,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainFrame extends JFrame {
     private JTextField textFieldName;
@@ -67,6 +69,13 @@ public class MainFrame extends JFrame {
                 {
                     JOptionPane.showMessageDialog(textFieldName,exc.getMessage());
                 }
+                if (manRadioMan.isSelected()) {
+                    manRegex(textFieldName.getText());
+                }
+                else if (womanRadioWoman.isSelected()) {
+                    womanRegex(textFieldName.getText());
+                }
+
 
             }
         });
@@ -85,8 +94,6 @@ public class MainFrame extends JFrame {
                 }
             }
         });
-        //textFieldMail
-
 
         textFieldMail.addFocusListener(new FocusAdapter() {
             @Override
@@ -114,4 +121,29 @@ public class MainFrame extends JFrame {
 
 
     }
+    void manRegex(String s)
+    {
+        Pattern pattern = Pattern.compile("(ek$)|(usz$)");
+        Matcher matcher = pattern.matcher(s);
+        if (matcher.find()){}
+        else
+        {
+            //throw new IllegalArgumentException("uszek");
+            //System.out.print("uszek");
+            JOptionPane.showMessageDialog(textFieldName, "the name ending must be -ek or -usz");
+        }
+    }
+    void womanRegex(String s)
+    {
+        Pattern pattern = Pattern.compile("(ta$)|(na$)");
+        Matcher matcher = pattern.matcher(s);
+        if (matcher.find()){}
+        else
+        {
+            //throw new IllegalArgumentException("uszek");
+            //System.out.print("uszek");
+            JOptionPane.showMessageDialog(textFieldName, "the name ending must be -ta or -na");
+        }
+    }
+
 }

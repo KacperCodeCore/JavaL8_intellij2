@@ -17,11 +17,8 @@ public class OwnExceptions {
          if (!s.isEmpty() && !Character.isUpperCase(s.charAt(0))) {
             throw new IllegalArgumentException("the first leather must be uppercase");
         }
-        else {
-            if (Pattern.matches("[a-zA-Z]+", s)) {
-            } else {
-                throw new IllegalArgumentException("The name/surnane must consist of letters only");
-            }
+        else if (!Pattern.matches("[a-zA-Z]+", s)) {
+            throw new IllegalArgumentException("The name/surnane must consist of letters only");
         }
     }
 
