@@ -1,20 +1,21 @@
+import Exceptions.*;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class MainFrame extends JFrame {
     private JTextField textFieldName;
     private JRadioButton manRadioMan;
     private JRadioButton womanRadioWoman;
-    private JButton button1;
+    private JButton confirmButton;
     private JPanel mainPanel;
     private JTextField textFieldNick;
     private JTextField textFieldSurname;
     private JTextField textFieldMail;
+    private JTextField textFieldError;
 
     public MainFrame() {
 
@@ -48,11 +49,12 @@ public class MainFrame extends JFrame {
                 super.focusLost(e);
 
                 try{
-                    OwnExceptions.nick(textFieldNick.getText());
+                    MethodsForExceptions.nick(textFieldNick.getText());
+                    textFieldError.setText("");
                 }
-                catch (IllegalArgumentException exc)
+                catch (NickException exc)
                 {
-                    JOptionPane.showMessageDialog(textFieldNick,exc.getMessage());
+                    textFieldError.setText(exc.getMessage());
                 }
             }
         });
@@ -63,17 +65,30 @@ public class MainFrame extends JFrame {
                 super.focusLost(e);
 
                 try{
-                    OwnExceptions.nameorsurname(textFieldName.getText());
+                    MethodsForExceptions.nameorsurname(textFieldName.getText());
+                    if (manRadioMan.isSelected()) {
+                        MethodsForExceptions.manRegex(textFieldName.getText());
+                    }
+                    else if (womanRadioWoman.isSelected()) {
+                        MethodsForExceptions.womanRegex(textFieldName.getText());
+                    }
+                    else {
+                        MethodsForExceptions.nullGenderChose("s");
+                    }
+                    textFieldError.setText("");
                 }
-                catch (IllegalArgumentException exc)
+                catch (NameSurnameException e1)
                 {
-                    JOptionPane.showMessageDialog(textFieldName,exc.getMessage());
+                    textFieldError.setText(e1.getMessage());
                 }
-                if (manRadioMan.isSelected()) {
-                    manRegex(textFieldName.getText());
+                catch (GenderManException e2){
+                    textFieldError.setText(e2.getMessage());
                 }
-                else if (womanRadioWoman.isSelected()) {
-                    womanRegex(textFieldName.getText());
+                catch (GenderWomanException e3){
+                    textFieldError.setText(e3.getMessage());
+                }
+                catch (GenderNullException e4){
+                    textFieldError.setText(e4.getMessage());
                 }
 
 
@@ -86,11 +101,12 @@ public class MainFrame extends JFrame {
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
                 try{
-                    OwnExceptions.nameorsurname(textFieldSurname.getText());
+                    MethodsForExceptions.nameorsurname(textFieldSurname.getText());
+                    textFieldError.setText("");
                 }
-                catch (IllegalArgumentException exc)
+                catch (NameSurnameException exc)
                 {
-                    JOptionPane.showMessageDialog(textFieldSurname,exc.getMessage());
+                    textFieldError.setText(exc.getMessage());
                 }
             }
         });
@@ -100,17 +116,58 @@ public class MainFrame extends JFrame {
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
                 try{
-                    OwnExceptions.mail(textFieldMail.getText());
+                    MethodsForExceptions.mail(textFieldMail.getText());
+                    textFieldError.setText("");
                 }
-                catch (IllegalArgumentException exc)
+                catch (MailException exc)
                 {
-                    JOptionPane.showMessageDialog(textFieldMail,exc.getMessage());
+                    textFieldError.setText(exc.getMessage());
                 }
             }
             });
 
 
-
+        confirmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    MethodsForExceptions.nick(textFieldNick.getText());
+                    MethodsForExceptions.nameorsurname(textFieldName.getText());
+                    MethodsForExceptions.nameorsurname(textFieldSurname.getText());
+                    if (manRadioMan.isSelected()) {
+                        MethodsForExceptions.manRegex(textFieldName.getText());
+                    }
+                    else if (womanRadioWoman.isSelected()) {
+                        MethodsForExceptions.womanRegex(textFieldName.getText());
+                    }
+                    else {
+                        MethodsForExceptions.nullGenderChose("s");
+                    }
+                    MethodsForExceptions.mail(textFieldMail.getText());
+                    textFieldError.setText("All Correct");
+                }
+                catch (NickException e1)
+                {
+                    textFieldError.setText(e1.getMessage());
+                }
+                catch (NameSurnameException e2)
+                {
+                    textFieldError.setText(e2.getMessage());
+                }
+                catch (GenderManException e3){
+                    textFieldError.setText(e3.getMessage());
+                }
+                catch (GenderWomanException e4){
+                    textFieldError.setText(e4.getMessage());
+                }
+                catch (GenderNullException e5){
+                    textFieldError.setText(e5.getMessage());
+                }
+                catch (MailException e6) {
+                    textFieldError.setText(e6.getMessage());
+                }
+            }
+        });
     }
     public static void main(String[] args) {
         MainFrame mf = new MainFrame();
@@ -121,29 +178,4 @@ public class MainFrame extends JFrame {
 
 
     }
-    void manRegex(String s)
-    {
-        Pattern pattern = Pattern.compile("(ek$)|(usz$)");
-        Matcher matcher = pattern.matcher(s);
-        if (matcher.find()){}
-        else
-        {
-            //throw new IllegalArgumentException("uszek");
-            //System.out.print("uszek");
-            JOptionPane.showMessageDialog(textFieldName, "the name ending must be -ek or -usz");
-        }
-    }
-    void womanRegex(String s)
-    {
-        Pattern pattern = Pattern.compile("(ta$)|(na$)");
-        Matcher matcher = pattern.matcher(s);
-        if (matcher.find()){}
-        else
-        {
-            //throw new IllegalArgumentException("uszek");
-            //System.out.print("uszek");
-            JOptionPane.showMessageDialog(textFieldName, "the name ending must be -ta or -na");
-        }
-    }
-
 }
